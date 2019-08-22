@@ -1,0 +1,29 @@
+AuthName "ADMIN"
+AuthUserFile "/home4/surebuds/.htpasswds/public_html/passwd"
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /restomulti/
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule . /index.php [L]
+</IfModule>
+RewriteCond %{HTTP_HOST} ^surebuds\.ca$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.surebuds\.ca$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^/?$ "http\:\/\/surebuds\.ca\/menu\-surebuds\-windsor" [R=301,L]
+
+# Use PHP56 as default
+AddHandler application/x-httpd-php56 .php
+<IfModule mod_suphp.c>
+    suPHP_ConfigPath /opt/php56/lib
+</IfModule>
